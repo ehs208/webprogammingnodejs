@@ -1,0 +1,32 @@
+<!--201935302 은현수-->
+
+<table class="table table-bordered border-primary">
+    <thead>
+      <tr>
+        <td>제목</td>
+        <td>페이지당 글 수</td>
+        <td>설명</td>
+        <td>일반 사용자 쓰기 가능 여부</td>
+        <td>댓글 가능 여부</td>
+      </tr>
+    </thead>
+    <tbody>
+      <% boardtypes.forEach(function(item) { %>
+      <tr>
+        <td><%= item.title %></td>
+        <td><%= item.numPerPage %></td>
+        <td><%= item.description %></td>
+        <td><%= item.write_YN %></td>
+        <td><%= item.re_YN %></td>
+        <% if (level === '01') { %>
+        <td><a href="/board/type/update/<%= item.type_id %>">수정</a></td>
+        <td><a href="/board/type/delete/<%= item.type_id %>">삭제</a></td>
+        <% } else { %>
+        <td></td> <!-- Empty cell if level is not 01 -->
+        <td></td> <!-- Empty cell if level is not 01 -->
+        <% } %>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  

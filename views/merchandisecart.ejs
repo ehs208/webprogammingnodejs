@@ -1,0 +1,65 @@
+<form id="purchaseForm" action="/purchase/cart_purchase_process" method="post" enctype="application/x-www-form-urlencoded">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>상품</th>
+                <th>상품명</th>
+                <th>단가</th>
+                <th>담은날</th>
+                <th>수량</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% for (let i = 0; i < cart.length; i++) { %>
+                <tr>
+                    <!-- 상품 이미지 -->
+                    <td>
+                        <img src="<%= cart[i].image %>" alt="상품 이미지" style="width: 50px; height: 50px;">
+                    </td>
+                    <!-- 상품명 -->
+                    <td><p name="name"><%= cart[i].name %></p></td>
+                    <!-- 단가 -->
+                    <td><p name="price"><%= cart[i].price %>원</p></td>
+                    <!-- 담은 날 -->
+                    <td><p name="date"><%= cart[i].date %></p></td>
+                    <!-- 수량 입력 -->
+                    <td>
+                        <input type="number" name="quantity" class="form-control" value="0" onchange="updateTotal()">
+                    </td>
+                    <!-- Hidden 필드로 추가 정보 전달 -->
+                    <input type="hidden" name="total" value="0">
+                    <input type="hidden" name="loginid" value="<%= cart[i].loginid %>">
+                    <input type="hidden" name="merid" value="<%= cart[i].mer_id %>">
+                    <input type="hidden" name="price_hidden" value="<%= cart[i].price %>">
+                    <input type="hidden" name="date" value="<%= cart[i].date %>">
+                    <!-- 포인트 계산 및 Hidden 필드로 추가 -->
+                    <input type="hidden" name="point" value="0">
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <!-- "구매하기" 버튼 -->
+    <button type="submit" class="btn btn-primary">구매하기</button>
+</form>
+
+<script>
+    function updateTotal() {
+        var quantityInputs = document.getElementsByName("quantity");
+        var priceElements = document.getElementsByName("price");
+        var totalInputs = document.getElementsByName("total");
+        var pointInputs = document.getElementsByName("point");
+
+        for (var i = 0; i < quantityInputs.length; i++) {
+            var price = parseFloat(priceElements[i].innerText.replace("원", ""));
+            var quantity = parseInt(quantityInputs[i].value);
+            var total = quantity * price;
+
+            totalInputs[i].value = total;
+
+            // 포인트 계산 및 업데이트
+            var point = total * 0.005; // 0.5%의 포인트 계산
+            pointInputs[i].value = point;
+        }
+    }
+</script>

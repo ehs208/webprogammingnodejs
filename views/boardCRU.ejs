@@ -1,0 +1,75 @@
+<div class="container">
+    <h2><% if (cru === 'R') { %> 정보 <% } else if (cru === 'U') { %> 수정 <% } else { %> 생성 <% } %></h2>
+
+    <form action="<%= (cru === 'U') ? '/board/update_process' : '/board/create_process' %>" method="post">
+        <% if (cru === 'R' || cru === 'U') { %>
+            <div class="mb-3">
+                <label class="form-label" for="id">제목</label>
+                <input class="form-control<%= (cru === 'R') ? ' disabled' : '' %>" type="text" name="title" style="width:300px;" value="<%= board[0].title %>" <%= (cru === 'R') ? 'readonly' : '' %>/>
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">작성자</label>
+                <% var authorName = "" %>
+                <% person.forEach(function (personItem) { %>
+                    <% if (personItem.loginid === board[0].loginid) { %>
+                        <% authorName = personItem.name %>
+                    <% } %>
+                <% }) %>
+                <input class="form-control disabled" type="text" name="loginid" value="<%= authorName %>" style="width:300px;" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">작성일</label>
+                <input class="form-control disabled" type="text" name="created_at" value="<%=board[0].date %>" style="width:300px;" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">내용</label>
+                <textarea class="form-control<%= (cru === 'R') ? ' disabled' : '' %>" name="content" style="width:800px;height: 200px;" <%= (cru === 'R') ? 'readonly' : '' %>><%= board[0].content %></textarea>
+            </div>
+            <input type="hidden" name="boardid" value="<%= board[0].board_id %>" />
+            <% if (cru === 'U') { %>
+                <button class="btn btn-outline-primary btn-sm" type="submit">제출</button>
+            <% } else if (level === '01' || (level === '02' && loginid === board[0].loginid)) { %>
+                <a href="/board/update/<%= board[0].board_id %>/<%= board[0].type_id %>/1" class="btn btn-outline-primary btn-sm">수정</a>
+                <a href="/board/delete/<%= board[0].board_id %>/<%= board[0].type_id %>/1" class="btn btn-outline-primary btn-sm">삭제</a>
+            <% } %>
+        <% } else { %>
+            <!-- 생성 버튼이 여기에 위치함 -->
+            <!-- 나머지 입력 필드 -->
+            <div class="mb-3">
+                <label class="form-label" for="id">제목</label>
+                <input class="form-control" type="text" name="title" style="width:300px;" required />
+            </div>
+            <!-- 작성자 필드는 읽기 전용이지만 표시됩니다. -->
+            <div class="mb-3">
+                <label class="form-label" for="id">작성자</label>
+                <% var authorName = "" %>
+                <% person.forEach(function (personItem) { %>
+                    <% if (personItem.loginid === loginid) { %>
+                        <% authorName = personItem.name %>
+                    <% } %>
+                <% }) %>
+                
+                <input class="form-control disabled" type="text" name="loginid" value="<%= authorName %>" style="width:300px;" readonly />
+            </div>    
+            <div class="mb-3">
+                <label class="form-label" for="id">작성일</label>
+                <input class="form-control disabled" type="text" name="created_at" value="<%= time %>" style="width:300px;" readonly />
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="id">내용</label>
+                <textarea class="form-control" name="content" style="width:800px;height: 200px;" required></textarea>
+            </div>
+            <input type="hidden" name="typeId" value="<%= type_id %>" />
+            <input type="hidden" name="loginId" value="<%= loginid %>" />
+            <input type="hidden" name="password" value="<%= password %>" />
+            <button class="btn btn-outline-primary btn-sm" type="submit">생성</button>
+        <% } %>
+    </form>
+</div>
+
+<style>
+    .disabled {
+        pointer-events: none;
+        background-color: #f5f5f5; /* 변경 불가능한 상태일 때 배경 색 */
+    }
+</style>

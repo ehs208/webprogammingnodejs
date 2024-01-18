@@ -1,0 +1,42 @@
+  <!--201935302 은현수-->
+
+<div class="container">	
+    <h2><%= check === 'create' ? '코드 입력' : '코드 수정' %></h2>
+	<form action="/code/<%= check === 'create' ? 'create' : 'update' %>_process" method="post">
+		
+		<% if (check === 'update') { %>
+			<input type="hidden" name="hidden_main_id" value="<%= codedata[0].main_id %>">
+			<input type="hidden" name="hidden_sub_id" value="<%= codedata[0].sub_id %>">
+			<% } %>
+
+		<% if (check === 'create') { %>
+		<div class="mb-3">
+			<label class="form-label" for="id">대분류</label> 
+			<input class="form-control" type="text" name="main_id" placeholder="0000" style="width:300px;" value="<%= check === 'update' ? codedata[0].main_id : '' %>" />
+		</div>
+		<% } %>
+        <div class="mb-3">
+			<label class="form-label" for="id">대분류명</label> 
+			<input class="form-control" type="text" name="main_name" style="width:300px;" value="<%= check === 'update' ? codedata[0].main_name : '' %>" />
+		</div>
+		<% if (check === 'create') { %>
+        <div class="mb-3">
+			<label class="form-label" for="id">소분류</label> 
+			<input class="form-control" type="text" name="sub_id" style="width:300px;" value="<%= check === 'update' ? codedata[0].sub_id : '' %>" />
+		</div>
+		<% } %>
+        <div class="mb-3">
+			<label class="form-label" for="id">소분류명</label> 
+			<input class="form-control" type="text" name="sub_name" style="width:300px;" value="<%= check === 'update' ? codedata[0].sub_name : '' %>" />
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">시작일</label> 
+			<input class="form-control" type="text" name="start" id="start" style="width:300px;" value="<%= check === 'update' ? codedata[0].start : '' %>" />
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">종료일</label> 
+			<input class="form-control" type="text" name="end" id="end" style="width:300px;" value="<%= check === 'update' ? codedata[0].end : '' %>" />
+		</div>
+        <button class="btn btn-outline-primary btn-sm" type="submit"><%= check === 'create' ? '입력' : '수정' %></button>
+  </form>
+</div>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+</head>
+<body>
+
+
+    <form action="<%= check === 'create' ? '/shop/purchasehistory/create_process' : '/shop/purchasehistory/update_process' %>" method="post">
+        <table class="table table-bordered border-primary">
+            <tbody>
+                <tr>
+                    <td><label for="loginId">Login ID:</label></td>
+                    <td>
+                        <select id="loginId" name="login_id" required>
+                            <% persons.forEach(person => { %>
+                                <option value="<%= person.loginid %>"><%= person.loginid %></option>
+                            <% }); %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="merId">Mer ID:</label></td>
+                    <td>
+                        <select id="merId" name="mer_id" required>
+                            <% merchandise.forEach(mer => { %>
+                                <option value="<%= mer.mer_id %>"><%= mer.mer_id %></option>
+                            <% }); %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="date">Date:</label></td>
+                    <td><input type="text" id="date" name="date" value="<%= check === 'update' ? purchaseHistory[0].date : time %>" readonly required></td>
+                </tr>
+                <tr>
+                    <td><label for="price">Price:</label></td>
+                    <td><input type="text" id="price" name="price" value="<%= check === 'update' ? purchaseHistory[0].price : '' %>" required></td>
+                </tr>
+                <tr>
+                    <td><label for="point">Point:</label></td>
+                    <td><input type="text" id="point" name="point" value="<%= check === 'update' ? purchaseHistory[0].point : '' %>" required></td>
+                </tr>
+                <tr>
+                    <td><label for="qty">Quantity:</label></td>
+                    <td><input type="text" id="qty" name="qty" value="<%= check === 'update' ? purchaseHistory[0].qty : '' %>" required></td>
+                </tr>
+                <tr>
+                    <td><label for="total">Total:</label></td>
+                    <td><input type="text" id="total" name="total" value="<%= check === 'update' ? purchaseHistory[0].total : '' %>" required></td>
+                </tr>
+                <tr>
+                    <td><label for="payYN">Pay Status:</label></td>
+                    <td>
+                        <select id="payYN" name="payYN" required>
+                            <option value="Y" <%= check === 'update' && purchaseHistory[0].payYN === 'Y' ? 'selected' : '' %>>Y</option>
+                            <option value="N" <%= check === 'update' && purchaseHistory[0].payYN === 'N' ? 'selected' : '' %>>N</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="cancel">Cancel Status:</label></td>
+                    <td>
+                        <select id="cancel" name="cancel" required>
+                            <option value="Y" <%= check === 'update' && purchaseHistory[0].cancel === 'Y' ? 'selected' : '' %>>Y</option>
+                            <option value="N" <%= check === 'update' && purchaseHistory[0].cancel === 'N' ? 'selected' : '' %>>N</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="refund">Refund Status:</label></td>
+                    <td>
+                        <select id="refund" name="refund" required>
+                            <option value="Y" <%= check === 'update' && purchaseHistory[0].refund === 'Y' ? 'selected' : '' %>>Y</option>
+                            <option value="N" <%= check === 'update' && purchaseHistory[0].refund === 'N' ? 'selected' : '' %>>N</option>
+                        </select>
+                    </td>
+                </tr>
+                <% if (check === 'update') { %>
+                    <tr>
+                        
+                        <td><input type="hidden" id="purchaseId" name="purchase_id" value="<%= purchaseHistory[0].purchase_id %>" readonly required></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <button type="submit">구매내역 <%= check === 'create' ? '추가' : '수정' %></button>
+    </form>
+
+    <a href="/shop/purchaseHistory/view">구매내역으로 돌아가기</a>
+</body>
+</html>

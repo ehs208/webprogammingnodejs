@@ -1,0 +1,35 @@
+  <!--201935302 은현수-->
+
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <td>아이디</td>
+            <td>패스워드</td>
+            <td>이름</td>
+            <td>주소</td>
+            <td>번호</td>
+            <td>생일</td>
+            <td>권한</td>
+            <td>포인트</td>
+        </tr>
+    </thead>
+    <tbody>
+        <% perdata.forEach(function(item) { %>
+            <tr>
+                <td> <%= item.loginid %></td>
+                <td> <%= item.password %></td>
+                <td> <%= item.name %></td>
+                <td> <%= item.address %></td>
+                <td> <%= item.tel %></td>
+                <td> <%= item.birth %></td>
+                <td> <%= item.class %></td>
+                <td> <%= item.point %></td>
+                    <% if (vu === 'u') { %>
+                        <td><a href="/person/update/<%= item.loginid %>">수정</a></td>
+                        <td><a href="/person/delete/<%= item.loginid %>">삭제</a></td>
+                    <% } %>
+                
+            </tr>
+        <% }); %>
+    </tbody>
+</table>

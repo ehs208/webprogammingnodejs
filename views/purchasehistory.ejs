@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>구매내역</title>
+</head>
+<body>
+    <h1>구매내역</h1>
+
+    <% if (purchaseHistory.length > 0) { %>
+        <table class="table table-bordered border-primary">
+            <thead>
+                <tr>
+                    <th>Login ID</th>
+                    <th>Mer ID</th>
+                    <th>Date</th>
+                    <th>Price</th>
+                    <th>Point</th>
+                    <th>Quantity</th>
+                    <th>Total</th>
+                    <th>Pay Status</th>
+                    <th>Cancel Status</th>
+                    <th>Refund Status</th>
+                    <!-- Add other columns as needed -->
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% purchaseHistory.forEach(item => { %>
+                    <tr>
+                        <td><%= item.loginid %></td>
+                        <td><%= item.mer_id %></td>
+                        <td><%= item.date %></td>
+                        <td><%= item.price %></td>
+                        <td><%= item.point %></td>
+                        <td><%= item.qty %></td>
+                        <td><%= item.total %></td>
+                        <td><%= item.payYN %></td>
+                        <td><%= item.cancel %></td>
+                        <td><%= item.refund %></td>
+                        <!-- Add other columns as needed -->
+                        <td>
+                            <!-- Add update and delete links with appropriate routes -->
+                            <a href="/shop/purchasehistory/update/<%= item.purchase_id %>">Update</a>
+                            <a href="/shop/purchasehistory/delete_process/<%= item.purchase_id %>">Delete</a>
+                        </td>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    <% } else { %>
+        <p>구매내역이 없습니다.</p>
+    <% } %>
+
+    <!-- Add link to create a new item in the purchase history -->
+    <a href="/shop/purchaseHistory/create">새로운 구매내역 추가</a>
+</body>
+</html>

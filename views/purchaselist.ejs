@@ -1,0 +1,49 @@
+<!-- Purchase 목록 표시 -->
+<table class="table">
+    <thead>
+      <tr>
+        <th>상품 사진</th>
+        <th>상품명</th>
+        <th>단가</th>
+        <th>구매량</th>
+        <th>총금액</th>
+        <th>구매일</th>
+        <th>취소여부</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let i = 0; i < purchase.length; i++) { %>
+        <tr>
+          <!-- 상품 사진 -->
+          <td><img src="<%= purchase[i].merchandise_image %>" alt="상품 이미지" style="width: 100px; height: 100px;" class="product-image"></td>
+  
+          <!-- 상품명 -->
+          <td><%= purchase[i].merchandise_name %></td>
+  
+          <!-- 단가 -->
+          <td><%= purchase[i].price %>원</td>
+  
+          <!-- 구매량 -->
+          <td><%= purchase[i].qty %>개</td>
+  
+          <!-- 총금액 -->
+          <td><%= purchase[i].total %>원</td>
+  
+          <!-- 구매일 -->
+          <td><%= purchase[i].date %></td>
+  
+          <!-- 취소여부 -->
+          <td>
+            <% if (purchase[i].cancel === 'Y') { %>
+              취소된 상품
+            <% } else { %>
+              <form action="/purchase/cancel/<%= purchase[i].purchase_id %>" method="post">
+                <button type="submit">취소하기</button>
+              </form>
+            <% } %>
+          </td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+  

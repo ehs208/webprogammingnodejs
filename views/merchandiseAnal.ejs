@@ -1,0 +1,54 @@
+<div class="container">    
+    <h2>가격대 별 상품 분포 </h2>
+
+    <% var i = 0;
+       while(i < percentage.length) { %>
+        <input type="hidden" value="<%=percentage[i].rate%>" class="data" name="rate">
+        <input type="hidden" value="<%=percentage[i].price_range%>" class="price_range" name="price_range">
+    <% i += 1 } %> 
+    <canvas id="graph" width="600" height="500" style="background-color: aliceblue"></canvas>
+
+    <script>
+        let data = document.getElementsByClassName("data");
+        let priceRanges = document.getElementsByClassName("price_range");
+        let colors = ["#3498db", "#e74c3c", "#2ecc71", "#f39c12", "#8e44ad", "#34495e", "#d35400"]; // 각각의 색상에 대한 HEX 코드
+        let canvas = document.getElementById("graph");
+        let context = canvas.getContext("2d");
+
+        for(let i = 0; i < data.length; i++){
+            context.font = "15px malgun gothic";
+            context.fillStyle = colors[i];
+            
+            // 가격대가 '기타'일 경우에는 특별한 처리를 하고, 아니면 그대로 표시
+            let priceText = priceRanges[i].value === '기타' ? '기타' : getPriceText(priceRanges[i].value);
+            let dataValue = data[i].value 
+            // 글씨를 그래프 앞으로 가져오기
+            context.globalCompositeOperation = 'destination-over';
+            context.fillText(priceText + ' | ' + dataValue + '%', 20, 20 + 20 * i );                    
+        }
+
+        let angle = 0;
+
+        for(let i = 0; i < data.length; i++){
+            context.fillStyle = colors[i];
+            context.beginPath();
+            context.moveTo(300, 250);
+            context.arc(300, 250, 200, angle, angle + (Math.PI * 2 * (parseFloat(data[i].value)/100)));
+            context.lineTo(300, 250);
+            context.fill();
+            
+            angle += Math.PI * 2 * (parseFloat(data[i].value)/100);
+        }  
+
+        // 가격대를 숫자에서 텍스트로 변환
+        function getPriceText(priceRange) {
+            if (priceRange === 'etc') {
+                return '기타';
+            } else {
+                let priceParts = priceRange.split('-');
+                return priceParts[0] + '원 - ' + priceParts[1] + '원';
+            }
+        }  
+    </script>
+
+</div>

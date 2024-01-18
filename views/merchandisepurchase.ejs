@@ -1,0 +1,69 @@
+<!-- EJS 템플릿 코드 -->
+
+<div class="container">
+    <div class="row">
+        <!-- 좌측: 상품 이미지 -->
+        <div class="col-md-6">
+            <img src="<%= merdata[0].image %>" alt="상품 이미지" style="width: 100%;">
+        </div>
+
+        <!-- 우측: 상품 정보 및 버튼 -->
+        <div class="col-md-6">
+            <!-- 상품 정보를 form 태그로 묶음 -->
+            <form action="/shop/purchase_process" method="post">
+                <h2 name="name"><%= merdata[0].name %></h2>
+                <!-- 가격 표시 -->
+                <p name="price">가격: <%= merdata[0].price %>원</p>
+                <!-- 브랜드 표시 -->
+                <p name="brand">브랜드: <%= merdata[0].brand %></p>
+
+                <!-- 수량 입력 -->
+                <div class="mb-3">
+                    <label for="quantity" class="form-label">수량</label>
+                    <!-- 수량을 동적으로 받아오도록 수정 -->
+                    <input type="number" id="quantity" name="quantity" class="form-control" value="1" onchange="updateTotal()">
+                </div>
+                <!-- Total 값을 보여주는 span 추가 -->
+                <p name="total">총 가격: <span id="total">0원</span></p>
+
+                <!-- Hidden 필드로 추가 정보 전달 -->
+                <input type="hidden" name="loginid" value="<%= loginid %>">
+                <input type="hidden" name="mer_id" value="<%= merdata[0].mer_id %>">
+                
+                <input type="hidden" name="point" value="">
+                <input type="hidden" name="price" value="<%= merdata[0].price %>">
+                <input type="hidden" name="total" value="0원">
+               
+                <input type="hidden" name="time" value="<%= time %>">
+                <!-- "결제" 버튼 -->
+                <button type="submit" class="btn btn-primary">결제</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // 수량이 변경될 때마다 Total 값을 업데이트하는 함수
+    function updateTotal() {
+        var quantity = document.getElementById("quantity").value;
+        var price = "<%= merdata[0].price %>";
+        var total = quantity * price;
+        var point = total * 0.005; // 0.5%의 포인트 계산
+        console.log(price);
+        document.getElementById("total").innerText = total + "원";
+
+        // getElementsByName으로 가져온 엘리먼트 컬렉션
+        var totalInputs = document.getElementsByName("total");
+        var pointInputs = document.getElementsByName("point");
+
+        // 엘리먼트가 여러 개일 경우를 대비하여 루프 사용
+        for (var i = 0; i < totalInputs.length; i++) {
+            totalInputs[i].value = total;
+        }
+
+        for (var j = 0; j < pointInputs.length; j++) {
+            pointInputs[j].value = point;
+        }
+    }
+</script>

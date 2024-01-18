@@ -1,0 +1,31 @@
+  <!--201935302 은현수-->
+
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <td>대분류</td>
+            <td>대분류명</td>
+            <td>소분류</td>
+            <td>소분류명</td>
+            <td>시작일</td>
+            <td>종료일</td>
+        </tr>
+    </thead>
+    <tbody>
+        <% code.forEach(function(item) { %>
+            <tr>
+                <td> <%= item.main_id %></td>
+                <td> <%= item.main_name %></td>
+                <td> <%= item.sub_id %></td>
+                <td> <%= item.sub_name %></td>
+                <td> <%= item.start %></td>
+                <td> <%= item.end %></td>
+                    <% if (vu === 'u') { %>
+                        <td><a href="/code/update/<%= item.main_id %>/<%= item.sub_id %>">수정</a></td>
+                        <td><a href="/code/delete/<%= item.main_id %>/<%= item.sub_id %>">삭제</a></td>
+                    <% } %>
+                
+            </tr>
+        <% }); %>
+    </tbody>
+</table>

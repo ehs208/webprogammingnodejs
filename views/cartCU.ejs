@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>장바구니에 수정</title>
+</head>
+<body>
+
+    <form action="<%= check === 'create' ? '/shop/cart/cart_create_process' : '/shop/cart/cart_update_process' %>" method="post">
+        <table class="table table-bordered border-primary">
+            <tbody>
+                <tr>
+                    <td><label for="loginId">Login ID:</label></td>
+                    <td>
+                        <select id="loginId" name="login_id" required>
+                            <% persons.forEach(person => { %>
+                                <option value="<%= person.loginid %>" <%= check === 'update' && person.loginid === cart[0].loginid ? 'selected' : '' %>><%= person.loginid %></option>
+                            <% }); %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="merId">Mer ID:</label></td>
+                    <td>
+                        <select id="merId" name="mer_id" required>
+                            <% merchandise.forEach(mer => { %>
+                                <option value="<%= mer.mer_id %>" <%= check === 'update' && mer.mer_id === cart[0].mer_id ? 'selected' : '' %>><%= mer.mer_id %></option>
+                            <% }); %>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td><label for="date">Date:</label></td>
+                    <td><input type="text" id="date" name="date" value="<%= check === 'update' ? cart[0].date : time %>" readonly required></td>
+                </tr>
+                <% if (check === 'update') { %>
+                    <tr>
+                       
+                        <td><input type="hidden" id="cartId" name="cart_id" value="<%= cart[0].cart_id %>" readonly required></td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+
+        <button type="submit"><%= check === 'create' ? '장바구니에 추가' : '장바구니 수정' %></button>
+    </form>
+
+    <a href="/shop/cart/view">장바구니로 돌아가기</a>
+</body>
+</html>

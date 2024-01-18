@@ -1,0 +1,76 @@
+  <!--201935302 은현수-->
+
+<div class="container">	
+    <script>
+        function displayFileName(){
+            var fileName = $("#file").val();
+            $(".upload-name").val(fileName);
+        }
+    </script>
+
+	
+<h2>
+    <% if (check === 'create') { %>
+        상품 등록
+    <% } else if (check === 'update') { %>
+        상품 수정
+    <% } %>
+</h2>
+    
+<form action="/merchandise/<% if (check === 'create') { %>create_process<% } else if (check === 'update') { %>update_process<% } %>" method="post" enctype="multipart/form-data">
+	<div class="mb-3">
+		<label class="form-label" for="category">카테고리</label>
+		<select name="category" id="category">
+		  <!-- 코드 테이블 데이터를 반복해서 옵션으로 생성 -->
+		  <option value="">선택하세요</option> <!-- 선택하세요 옵션 추가 -->
+		  <% for (var i = 0; i < codedata.length; i++) { %>
+			<option value="<%= codedata[i].sub_id %>" 
+			  <% if (codedata[i].sub_id === merdata[0].category) { %> selected <% } %>
+			>
+			  <%= codedata[i].sub_name %>
+			</option>
+		  <% } %>
+		</select>
+	  </div>
+        <div class="mb-3">
+			<label class="form-label" for="id">제품명</label> 
+			<input class="form-control" type="text" name="name" style="width:300px;" value="<%= check === 'update' ? merdata[0].name : '' %>" />
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">가격</label>
+			<input class="form-control" type="number" name="price" style = "width:300px;" value="<%= check === 'update' ? merdata[0].price : '' %>" />
+				
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">재고</label> 
+			<input class="form-control" type="number" name="stock" style = "width:300px;" value="<%= check === 'update' ? merdata[0].stock : '' %>"/>
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">브랜드</label> 
+			<input class="form-control" type="text" name="brand" style = "width:300px;" value="<%= check === 'update' ? merdata[0].brand : '' %>"/>
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">공급자</label> 
+			<input class="form-control" type="text" name="supplier" style = "width:300px;" value="<%= check === 'update' ? merdata[0].supplier : '' %>" />
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">할인여부</label> 
+			<input class="form-control" type="text" name="sale_yn" style = "width:300px;" value="<%= check === 'update' ? merdata[0].sale_yn : '' %>" />
+		</div>
+        <div class="mb-3">
+			<label class="form-label" for="id">할인가격</label> 
+			<input class="form-control" type="number" name="sale_price" style = "width:300px;" value="<%= check === 'update' ? merdata[0].sale_price : '' %>" />
+		</div>
+		<div class="mb-3">
+            <input class="upload-name" value="" name ="image" placeholder="이미지파일">
+            <input type="file" id="file" name="uploadFile" onchange="displayFileName()">
+        </div>
+		<% if (check === 'update') { %>
+			<input type="hidden" name="mer_id" value="<%= merdata[0].mer_id %>">
+			<button class="btn btn-outline-primary btn-sm" type="submit">수정</button>
+		<% } else if (check === 'create') { %>
+			<button class="btn btn-outline-primary btn-sm" type="submit">생성</button>
+		<% } %>
+		</form>
+		</div>
+		

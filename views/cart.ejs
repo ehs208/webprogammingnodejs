@@ -1,0 +1,29 @@
+<table class="table table-bordered border-primary">
+    <thead>
+        <tr>
+            <th>Login ID</th>
+            <th>Mer ID</th>
+            <th>Date</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <% cart.forEach(item => { %>
+            <tr>
+                <td><%= item.loginid %></td>
+                <td><%= item.mer_id %></td>
+                <td><%= item.date %></td>
+                <td>
+                    <a href="/shop/cart/update/<%= item.cart_id %>">Update</a>
+                    <a href="/shop/cart/delete_process/<%= item.cart_id %>">Delete</a>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
+
+<% if (cart.length === 0) { %>
+    <p>장바구니가 비어있습니다.</p>
+<% } %>
+
+<a href="/shop/cart/create">새로운 상품 추가</a>

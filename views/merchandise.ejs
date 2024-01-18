@@ -1,0 +1,53 @@
+<!--201935302 은현수-->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+    <% if (merdata.length === 0) { %>
+        <p>자료 없음</p>
+    <% } else { %>
+        <table class="table table-bordered">
+            <% merdata.forEach(item => { %>
+                <% if (category !== 'all') { %>
+                    <% if (item.category === category) { %>
+                        <tr>
+                            <td>
+                                <a href="/shop/detail/<%= item.mer_id %>">
+                                  <img src="<%= item.image %>" style="width: 100px; height: 100px;" alt="상품 이미지">
+                                </a>
+                              </td>
+                              
+                            <td><%= item.name %></td>
+                            <td>가격 : <%= item.price %></td>
+                            <td><%= item.brand %></td>
+                            <% if (vu === 'u') { %>
+                                <td><a href="/merchandise/update/<%= item.mer_id %>">수정</a></td>
+                                <td><a href="javascript:void(0);" onclick="if(confirm('정말로 삭제하시겠습니까?')) { location.href = '/merchandise/delete/<%= item.mer_id %>'; }">삭제</a></td>
+                            <% } %>
+                        </tr>
+                    <% } %>
+                <% } else { %>
+                    <!-- "all"이면 모든 항목을 표시하는 코드 -->
+                    <tr>
+                        <td>
+                            <a href="/shop/detail/<%= item.mer_id %>">
+                              <img src="<%= item.image %>" style="width: 100px; height: 100px;" alt="상품 이미지">
+                            </a>
+                          </td>
+                        <td><%= item.name %></td>
+                        <td>가격 : <%= item.price %></td>
+                        <td><%= item.brand %></td>
+                        <% if (vu === 'u') { %>
+                            <td><a href="/merchandise/update/<%= item.mer_id %>">수정</a></td>
+                            <td><a href="javascript:void(0);" onclick="if(confirm('정말로 삭제하시겠습니까?')) { location.href = '/merchandise/delete/<%= item.mer_id %>'; }">삭제</a></td>
+                        <% } %>
+                    </tr>
+                <% } %>
+            <% }); %>
+        </table>
+    <% } %>
+</body>
+</html>

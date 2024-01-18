@@ -1,0 +1,30 @@
+<!-- EJS 템플릿 코드 -->
+
+<div class="container">
+  <div class="row">
+    <!-- 좌측: 상품 이미지 -->
+    <div class="col-md-6">
+      <img src="<%= merdata[0].image %>" alt="상품 이미지" style="width: 100%;">
+    </div>
+
+    <!-- 우측: 상품 정보 및 버튼 -->
+    <div class="col-md-6">
+      <h2><%= merdata[0].name %></h2>
+      <p>가격: <%= merdata[0].price %>원</p>
+      <p>브랜드: <%= merdata[0].brand %></p>
+
+      <% if (level === "00" || level === "01" || level === "02") { %>
+        <!-- level이 "00", "01", "02"인 경우에만 구매 및 장바구니 버튼 표시 -->
+        <!-- 구매 버튼 -->
+        <a href="/shop/purchase/<%= merdata[0].mer_id %>" class="btn btn-primary">구매</a>
+        <!-- 장바구니 버튼 -->
+        <form action="/purchase/cart_process" method="post">
+          <input type="hidden" name="loginid" value="<%= loginid %>">
+          <input type="hidden" name="merid" value="<%= merdata[0].mer_id %>">
+          <input type="hidden" name="time" value="<%= time %>">
+          <button type="submit" class="btn btn-primary">장바구니</button>
+        </form>
+      <% } %>
+    </div>
+  </div>
+</div>
